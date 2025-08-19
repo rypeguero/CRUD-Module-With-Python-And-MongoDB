@@ -1,9 +1,0 @@
-dash
-dash-bootstrap-components
-dash-leaflet
-jupyter-dash
-plotly
-pandas
-numpy
-matplotlib
-pymongo
