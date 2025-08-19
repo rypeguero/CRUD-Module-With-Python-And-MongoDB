@@ -1,5 +1,10 @@
 # Grazioso Salvare Dashboard
 
+![Python](https://img.shields.io/badge/python-3.10-blue.svg)
+![Dash](https://img.shields.io/badge/Dash-Framework-brightgreen)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-green)
+
+
 ## Overview
 This project was developed for **CS-340: Client/Server Development** at Southern New Hampshire University (SNHU).  
 It demonstrates connecting a **MongoDB database** to a **Python CRUD module** and an interactive **dashboard** using Jupyter Dash.  
