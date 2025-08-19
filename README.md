@@ -28,7 +28,7 @@ The project simulates a real-world client, **Grazioso Salvare**, who needs to id
 
 # Screenshots
 ![Dashboard Overview](assets/Picture1.png)
-![Filtered Table](assests/Picture2.png)
+![Filtered Table](assets/Picture2.png)
 ![Breed Distribution Chart](assets/Picture3.png)
 ![Map View](assets/Picture5.png)
 
