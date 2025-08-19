@@ -27,10 +27,10 @@ The project simulates a real-world client, **Grazioso Salvare**, who needs to id
   Graceful exception handling to keep dashboard functional
 
 # Screenshots
-![Dashboard Overview](assets/picture1.png)
-![Filtered Table](assests/picture2.png)
-![Breed Distribution Chart](assets/picture3.png)
-![Map View](assets/picture5.png)
+![Dashboard Overview](assets/Picture1.png)
+![Filtered Table](assests/Picture2.png)
+![Breed Distribution Chart](assets/Picture3.png)
+![Map View](assets/Picture5.png)
 
 
   # Reflection
