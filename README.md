@@ -1,100 +1,201 @@
-# Grazioso Salvare Dashboard
+<div align="center">
 
-![Python](https://img.shields.io/badge/python-3.10-blue.svg)
-![Dash](https://img.shields.io/badge/Dash-Framework-brightgreen)
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-green)
+# Animal Rescue Analytics Dashboard
 
+### Python and MongoDB data access with an interactive rescue-candidate dashboard
+
+![Python](https://img.shields.io/badge/Python-Data%20Application-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-CRUD%20Layer-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Dash](https://img.shields.io/badge/Dash-Interactive%20Dashboard-008DE4?style=for-the-badge&logo=plotly&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+
+[Features](#key-features) · [Architecture](#application-architecture) · [Screenshots](#screenshots) · [Documentation](#project-documentation) · [Run](#installation-and-setup)
+
+</div>
+
+---
 
 ## Overview
-This project was developed for **CS-340: Client/Server Development** at Southern New Hampshire University (SNHU).  
-It demonstrates connecting a **MongoDB database** to a **Python CRUD module** and an interactive **dashboard** using Jupyter Dash.  
 
-The project simulates a real-world client, **Grazioso Salvare**, who needs to identify animals in shelters that are good candidates for search-and-rescue training.  
+This project combines a reusable **Python CRUD module** with an interactive **animal-rescue analytics dashboard**. It was developed for the fictional client Grazioso Salvare to help identify shelter animals that match different search-and-rescue training profiles.
 
----
+The application separates database operations from dashboard behavior, allowing the interface to focus on filtering, visualization and user interaction while the `AnimalShelter` class manages MongoDB access.
 
-## Features
-- **CRUD Python Module (`animal_shelter.py`)**  
-  - Encapsulates Create, Read, Update, and Delete operations with MongoDB  
-  - Centralized error handling with `PyMongoError`  
-  - Reusable design for future projects  
+| Area | Implementation |
+|---|---|
+| **Data access** | Python CRUD class using PyMongo |
+| **Database** | MongoDB animal collection |
+| **Interface** | Jupyter Dash dashboard |
+| **Data processing** | Pandas DataFrames |
+| **Visualization** | Plotly pie chart and Dash Leaflet map |
+| **Resilience** | Local CSV fallback when the classroom database is unavailable |
 
-- **Interactive Dashboard (`ProjectTwoDashboard.ipynb`)**  
-  - Filter animals by criteria (age, breed, outcome type, etc.)  
-  - Display results in a sortable, paginated data table  
-  - Show live charts (breed distribution, outcome distribution)  
-  - Display an interactive map with the selected animal’s location  
+## Key Features
 
-- **CSV Fallback**  
-  Works with local data if MongoDB is unavailable  
+### Reusable CRUD module
 
-- **Error Handling**  
-  Graceful exception handling to keep dashboard functional
+[`animal_shelter.py`](./Grazioso%20Salvare%20Dashboard%20Files/animal_shelter.py) encapsulates the database connection and provides methods for:
 
-# Screenshots
+- creating animal records
+- reading records with MongoDB queries
+- updating matching records
+- deleting matching records
+- handling database exceptions with predictable return values
+
+### Interactive rescue dashboard
+
+[`ProjectTwoDashboard.ipynb`](./Grazioso%20Salvare%20Dashboard%20Files/ProjectTwoDashboard.ipynb) provides:
+
+- water-rescue, mountain/wilderness and disaster/tracking filters
+- sortable and filterable shelter-record table
+- paginated record browsing
+- breed-distribution visualization
+- selected-animal geolocation map
+- synchronized updates through Dash callbacks
+- sample CSV fallback when MongoDB cannot be reached
+
+## Application Architecture
+
+```mermaid
+flowchart LR
+    A[MongoDB Animal Collection] --> B[AnimalShelter CRUD Module]
+    F[Local CSV Fallback] --> C[Dashboard DataFrame]
+    B --> C
+    C --> D[Rescue Profile Filters]
+    D --> E[Interactive Data Table]
+    E --> G[Breed Distribution Chart]
+    E --> H[Selected Animal Map]
+```
+
+The CRUD layer and dashboard remain separate so database logic can be maintained or reused without rewriting the interface.
+
+## CRUD Operations
+
+| Operation | Method | Behavior |
+|---|---|---|
+| Create | `create(data)` | Inserts one animal document |
+| Read | `read(query)` | Returns matching documents as a list |
+| Update | `update(query, new_data)` | Updates matching documents and returns the modified count |
+| Delete | `delete(query)` | Deletes matching documents and returns the deleted count |
+
+## Rescue Profiles
+
+The dashboard applies client-defined breed, sex and age criteria for:
+
+| Profile | Intended Use |
+|---|---|
+| Water Rescue | Identifies animals suited for water-rescue training |
+| Mountain/Wilderness | Identifies candidates for rugged outdoor rescue work |
+| Disaster/Tracking | Identifies candidates for tracking and disaster-response work |
+| Reset | Restores the complete available dataset |
+
+## Screenshots
+
+### Dashboard overview
+
 ![Dashboard Overview](assets/Picture1.png)
+
+### Filtered records
+
 ![Filtered Table](assets/Picture2.png)
+
+### Breed visualization
+
 ![Breed Distribution Chart](assets/Picture3.png)
+
+### Animal location map
+
 ![Map View](assets/Picture5.png)
 
+## Project Documentation
 
-  # Reflection
-- ## Questions and Answers
+The complete documentation explains the architecture, CRUD contract, dashboard behavior, data flow, setup, limitations and recommended improvements.
 
-### 1. How do you write programs that are maintainable, readable, and adaptable?  
-Especially consider your work on the CRUD Python module from Project One, which you used to connect the dashboard widgets to the database in Project Two. What were the advantages of working in this way? How else could you use this CRUD Python module in the future?
- 
-For this project I separated concerns into a small, well-named CRUD module and a dashboard UI. The `AnimalShelter` class encapsulates database access (connect, create, read, update, delete) so the dashboard stays focused on UI logic instead of raw database calls. Clear method names, docstrings, and centralized error handling with `PyMongoError` make failures easier to diagnose and fix.  
+<p align="center">
+  <a href="./docs/Animal-Rescue-Dashboard-Documentation.md"><strong>View Project Documentation</strong></a>
+  &nbsp;•&nbsp;
+  <a href="./docs/Animal-Rescue-Dashboard-Documentation.md?raw=1"><strong>Download Documentation</strong></a>
+  &nbsp;•&nbsp;
+  <a href="./Grazioso%20Salvare%20Dashboard%20Files/ProjectTwoDashboard.ipynb?raw=1"><strong>Download Jupyter Notebook</strong></a>
+</p>
 
-**Advantages in this project:**  
-- Modular and reusable code  
-- One place to update database logic  
-- Easier to test and maintain  
+## Installation and Setup
 
-**Future use:**  
-I can reuse this CRUD module in other analytics notebooks, a Flask/FastAPI microservice, or automation scripts. Extending it with schema validation, logging, and typed models (Pydantic) would make it even more production-ready.  
+### 1. Clone the repository
 
----
-
-### 2. How do you approach a problem as a computer scientist?  
-Consider how you approached the database or dashboard requirements that Grazioso Salvare requested. How did your approach to this project differ from previous assignments in other courses? What techniques or strategies would you use in the future to create databases to meet other client requests?
- 
-I start by clarifying requirements, mapping them to data flows, and choosing minimal tools that satisfy constraints. For Grazioso Salvare, I aligned requirements (filtering candidates, visualizing breeds, mapping locations) to dashboard components (table, chart, map) and connected them to the CRUD layer. Compared with earlier coursework, I relied more on **iterative prototyping** (getting one feature working end-to-end) and **observable state** (tables/charts/map all update from the same filtered dataset).  
-
-**Strategies for future databases:**  
-- Define schema and CRUD contract early  
-- Add validation and logging early  
-- Prototype smallest vertical slice before scaling  
-- Provide fallback/seed data for demos and tests  
-
----
-
-### 3. What do computer scientists do, and why does it matter?  
-How would your work on this type of project help a company, like Grazioso Salvare, to do their work better?
-
-Computer scientists translate domain needs into reliable systems. In this project, I turned shelter data into actionable insights: the dashboard filters animals by rescue profile, shows breed distribution, and pins a selected animal’s location so trainers can act faster.  
-
-**For Grazioso Salvare, this means:**  
-- Saving time by filtering shelter records quickly  
-- Making better selections for search-and-rescue training  
-- Improving outcomes through data-driven decision making  
-
-This demonstrates how computer science work directly impacts real organizations.  
-
----
-
-## Installation / Quick Start
 ```bash
-# Clone the repository
-git clone https://github.com/<your-username>/cs340-grazioso-dashboard.git
-cd cs340-grazioso-dashboard
+git clone https://github.com/rypeguero/CRUD-Module-With-Python-And-MongoDB.git
+cd CRUD-Module-With-Python-And-MongoDB
+```
 
-# (Optional) Create a virtual environment
-python -m venv venv
-source venv/bin/activate   # On Windows use venv\Scripts\activate
+### 2. Create a virtual environment
 
-# Install dependencies
-pip install -r requirements.txt
+```bash
+python -m venv .venv
+```
 
-# Run Jupyter Notebook
-jupyter notebook ProjectTwoDashboard.ipynb
+Activate it on Windows:
+
+```powershell
+.venv\Scripts\activate
+```
+
+Activate it on macOS or Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 4. Launch the dashboard
+
+```bash
+jupyter notebook "Grazioso Salvare Dashboard Files/ProjectTwoDashboard.ipynb"
+```
+
+## MongoDB Configuration
+
+The original coursework files contain connection values tied to a classroom-hosted MongoDB environment. That server may no longer be available outside the original environment.
+
+For continued development, replace those values with a MongoDB instance you control. Real credentials should be loaded from environment variables or another local configuration source and should not be committed to the repository.
+
+The dashboard includes a small local fallback dataset so the interface can still be demonstrated when the original database cannot be reached.
+
+## Repository Structure
+
+```text
+CRUD-Module-With-Python-And-MongoDB/
+├── Grazioso Salvare Dashboard Files/
+│   ├── animal_shelter.py
+│   └── ProjectTwoDashboard.ipynb
+├── assets/
+│   ├── Picture1.png
+│   ├── Picture2.png
+│   ├── Picture3.png
+│   └── Picture5.png
+├── docs/
+│   └── Animal-Rescue-Dashboard-Documentation.md
+├── requirements.txt
+└── README.md
+```
+
+## Concepts Demonstrated
+
+`Python` · `MongoDB` · `PyMongo` · `CRUD Operations` · `Dash` · `Jupyter` · `Pandas` · `Plotly` · `Dash Leaflet` · `Callbacks` · `Data Filtering` · `Data Visualization` · `Error Handling` · `Separation of Concerns`
+
+## Portfolio Context
+
+This project demonstrates how a reusable database-access component can support an interactive analytical interface. It also shows how filtering, tabular data, visualization and geolocation can remain synchronized through event-driven callbacks.
+
+---
+
+<div align="center">
+
+**Ryan A. Peguero · Computer Science · Software Engineering**
+
+</div>
